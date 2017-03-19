@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,28 +25,32 @@ public class Tester {
         String host = "192.168.17.220";
         int port = 10051;
         ZabbixSender zabbixSender = new ZabbixSender(host, port);
-
-
         DataObject dataObject = new DataObject();
         dataObject.setHost("macbookPro");
-        dataObject.setKey("key1");
-        dataObject.setValue("aaaabbbcccddd:1234567890");
+        dataObject.setKey("testItem-1");
         // TimeUnit is SECONDS.
         dataObject.setClock(System.currentTimeMillis()/1000);
         SenderResult result = null;
+        Random randomGenerator = new Random();
         try {
-            result = zabbixSender.send(dataObject);
+
+            //note a single Random object is reused here
+            for (int idx = 1; idx <= 10; ++idx){
+                Integer randomInt = randomGenerator.nextInt(100);
+                dataObject.setValue(randomInt.toString());
+                result = zabbixSender.send(dataObject);
+                System.out.println("result:" + result);
+                if (result.success()) {
+                    System.out.println("send success.");
+                } else {
+                    System.err.println("send fail!");
+                }
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println("result:" + result);
-        if (result.success()) {
-            System.out.println("send success.");
-        } else {
-            System.err.println("send fail!");
-        }
 
 
         Assert.assertEquals("","");
