@@ -1,0 +1,5 @@
+ZabbixAgent.ipr
+ZabbixAgent.iws
+out/
+src/main/resources/banner.txt
+src/test/resources/banner.txt
