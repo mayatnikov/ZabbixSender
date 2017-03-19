@@ -26,8 +26,10 @@ public class Tester {
         int port = 10051;
         ZabbixSender zabbixSender = new ZabbixSender(host, port);
         DataObject dataObject = new DataObject();
-        dataObject.setHost("macbookPro");
-        dataObject.setKey("testItem-1");
+        dataObject.setHost("MtsPos");
+//        dataObject.setKey("declined");
+        dataObject.setKey("approved");
+//        dataObject.setKey("error");
         // TimeUnit is SECONDS.
         dataObject.setClock(System.currentTimeMillis()/1000);
         SenderResult result = null;
@@ -35,9 +37,9 @@ public class Tester {
         try {
 
             //note a single Random object is reused here
-            for (int idx = 1; idx <= 10; ++idx){
+            for (int idx = 1; idx <= 100; ++idx){
                 Integer randomInt = randomGenerator.nextInt(100);
-                dataObject.setValue(randomInt.toString());
+                dataObject.setValue("Error number:"+randomInt.toString());
                 result = zabbixSender.send(dataObject);
                 System.out.println("result:" + result);
                 if (result.success()) {
