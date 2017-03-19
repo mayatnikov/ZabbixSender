@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'zabbix-agent'
+    version =  '0.0.1'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-release" }
+}
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+
+    // https://mvnrepository.com/artifact/io.github.hengyunabc/zabbix-sender
+    compile group: 'io.github.hengyunabc', name: 'zabbix-sender', version: '0.0.4'
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
